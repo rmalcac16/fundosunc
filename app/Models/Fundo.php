@@ -29,4 +29,9 @@ class Fundo extends Model
             $model->slug = Str::slug($model->nombre);
         });
     }
+
+    public function ganados()
+    {
+        return $this->hasMany(Ganado::class);
+    }
 }

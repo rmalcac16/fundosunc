@@ -18,7 +18,6 @@ import * as React from 'react';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
@@ -33,6 +32,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
+import { Link } from '@inertiajs/react';
 import { FundoData } from './Index';
 
 interface FundosDataTableProps {
@@ -53,33 +53,6 @@ export function FundosDataTable({ data, emptyMessage, onEdit, onDelete, onRestor
     const columns: ColumnDef<FundoData>[] = React.useMemo(
         () => [
             {
-                id: 'select',
-                header: ({ table }) => (
-                    <Checkbox
-                        checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')}
-                        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-                        aria-label="Select all"
-                    />
-                ),
-                cell: ({ row }) => (
-                    <Checkbox checked={row.getIsSelected()} onCheckedChange={(value) => row.toggleSelected(!!value)} aria-label="Select row" />
-                ),
-                enableSorting: false,
-                enableHiding: false,
-            },
-            {
-                accessorKey: 'id',
-                header: ({ column }) => {
-                    return (
-                        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
-                            ID <ArrowUpDown className="ml-2 h-4 w-4" />
-                        </Button>
-                    );
-                },
-                cell: ({ row }) => <div className="font-medium">{row.getValue('id')}</div>,
-                enableHiding: false,
-            },
-            {
                 accessorKey: 'nombre',
                 header: ({ column }) => {
                     return (
@@ -93,7 +66,7 @@ export function FundosDataTable({ data, emptyMessage, onEdit, onDelete, onRestor
                     const fallbackInitials = fundo.nombre ? fundo.nombre.substring(0, 2).toUpperCase() : '??';
 
                     return (
-                        <div className="flex items-center gap-3">
+                        <Link href={route('fundos.show', { fundo: fundo.id })} className="flex items-center gap-3">
                             <Avatar className="h-8 w-8">
                                 {fundo.imagen ? (
                                     <AvatarImage src={'storage/' + fundo.imagen} alt={fundo.nombre} />
@@ -109,7 +82,7 @@ export function FundosDataTable({ data, emptyMessage, onEdit, onDelete, onRestor
                                     </Badge>
                                 )}
                             </div>
-                        </div>
+                        </Link>
                     );
                 },
             },

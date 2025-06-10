@@ -22,7 +22,6 @@ class FundoController extends Controller
         ]);
     }
 
-
     public function create()
     {
         return Inertia::render('Fundos/Create');
@@ -47,7 +46,14 @@ class FundoController extends Controller
             'imagen' => $imagePath,
         ]);
 
-        return to_route('fundos.index')->with('success', 'Fundo creado correctamente.');
+        return to_route('fundos.index');
+    }
+
+    // Show
+    public function show(Fundo $fundo)
+    {
+        $fundo->load('ganados');
+        return Inertia::render('Fundos/Show', ['fundo' => $fundo]);
     }
 
     public function edit(Fundo $fundo)
@@ -84,7 +90,7 @@ class FundoController extends Controller
             'imagen' => $imagePath,
         ]);
 
-        return to_route('fundos.index')->with('success', 'Fundo actualizado correctamente.');
+        return to_route('fundos.index');
     }
 
     public function destroy(Fundo $fundo)
@@ -94,7 +100,7 @@ class FundoController extends Controller
         }
         $fundo->delete();
 
-        return to_route('fundos.index')->with('success', 'Fundo eliminado correctamente.');
+        return to_route('fundos.index');
     }
 
     public function restore($id)
@@ -107,7 +113,7 @@ class FundoController extends Controller
 
         $fundo->restore();
 
-        return to_route('fundos.index')->with('success', 'Fundo restaurado correctamente.');
+        return to_route('fundos.index');
     }
 
     public function forceDelete($id)
@@ -119,11 +125,11 @@ class FundoController extends Controller
         }
 
         if (!$fundo->trashed()) {
-            return to_route('fundos.index')->with('error', 'El fundo no está eliminado.');
+            return to_route('fundos.index');
         }
 
         $fundo->forceDelete();
 
-        return to_route('fundos.index')->with('success', 'Fundo eliminado permanentemente.');
+        return to_route('fundos.index');
     }
 }

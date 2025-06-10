@@ -33,7 +33,7 @@ export default function Register() {
 
     return (
         <AuthLayout title="Crea una cuenta" description="Ingrese sus datos a continuación para crear su cuenta">
-            <Head title="Register" />
+            <Head title="Registrarse" />
             <form className="flex flex-col gap-6" onSubmit={submit}>
                 <div className="grid gap-6">
                     <div className="grid gap-2">
